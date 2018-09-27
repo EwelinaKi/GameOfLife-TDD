@@ -2,37 +2,47 @@ package main.java.gameOfLife.model;
 
 public class Cell {
 
-    private boolean isLiving;
-    private boolean willLive;
-    private int[][] neighbors;
+    private final int[] neighbors;
+    private boolean alive;
+    private boolean goingToLive;
 
-    Cell(int posX, int posY) {
-        isLiving = false;
-        willLive = false;
-        neighbors = createNeighborsArray(posX, posY);
+    public Cell(int index) {
+        alive = false;
+        goingToLive = false;
+        neighbors = createNeighborsArray(index);
     }
 
     public void calculateNewState() {
-        //TODO testy
-        //TODO ustawic willLive na bazie sąsiadów
+        //TODO ustawic goingToLive na bazie sąsiadów
     }
 
-    public void setNewState() {
-        isLiving = willLive;
+    public boolean isAlive() {
+        return alive;
     }
 
-    public boolean getIsLiving() {
-        return isLiving;
+    public boolean isGoingToLive() {
+        return goingToLive;
     }
 
-    public boolean getWillLive() {
-        return willLive;
+    public int[] getNeighbors() {
+        return neighbors;
     }
 
-    private int[][] createNeighborsArray(int posX, int posY) {
-        //TODO testy
+    public void updateState() {
+        alive = goingToLive;
+    }
+
+    public void kill() {
+        alive = false;
+    }
+
+    public void revive() {
+        alive = true;
+    }
+
+    private int[] createNeighborsArray(int index) {
         //TODO obliczyc i zapisac sasiadow komorki
-        int neighbours[][] = null;
+        int neighbours[] = null;
         return neighbours;
     }
 }
