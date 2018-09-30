@@ -1,5 +1,7 @@
 package main.java.gameOfLife.model;
 
+import main.java.gameOfLife.controller.Main;
+
 public class Cell {
 
     private final int[] neighbors;
@@ -13,7 +15,18 @@ public class Cell {
     }
 
     public void calculateNewState() {
-        //TODO ustawic goingToLive na bazie sąsiadów
+        int livingNeighbors = 0;
+
+        for (int i = 0; i < neighbors.length; i++) {
+            livingNeighbors = Main.cells[neighbors[i]].isAlive() ? livingNeighbors + 1 : livingNeighbors;
+        }
+        if (livingNeighbors < 2 || livingNeighbors > 3) {
+            goingToLive = false;
+        } else if (livingNeighbors == 3) {
+            goingToLive = true;
+        } else {
+            goingToLive = alive;
+        }
     }
 
     public boolean isAlive() {

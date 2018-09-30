@@ -9,11 +9,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    // array of all cells in game
     public static Cell[] cells;
+
     //size of the game field
     private static final int ROWS_Y = 100;
     private static final int COLUMNS_X = 100;
-
 
     public static void main(String[] args) {
         launch(args);
