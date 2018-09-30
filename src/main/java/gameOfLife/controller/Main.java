@@ -1,6 +1,8 @@
 package main.java.gameOfLife.controller;
 
+import javafx.scene.layout.Pane;
 import main.java.gameOfLife.model.Cell;
+import main.java.gameOfLife.view.DisplayCells;
 import main.java.gameOfLife.view.GameScene;
 
 import javafx.application.Application;
@@ -13,8 +15,8 @@ public class Main extends Application {
     public static Cell[] cells;
 
     //size of the game field
-    private static final int ROWS_Y = 100;
-    private static final int COLUMNS_X = 100;
+    private static final int ROWS_Y = 30;
+    private static final int COLUMNS_X = 53;
 
     public static void main(String[] args) {
         launch(args);
@@ -23,13 +25,12 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Game of life");
-        StackPane root = new StackPane();
+        Pane root = new Pane();
         GameScene scene = new GameScene(root, stage);
 
         cells = createCellsList(ROWS_Y, COLUMNS_X);
-        showCells(root);
+        DisplayCells.initializeView(root, COLUMNS_X);
     }
-
 
     public static Cell[] createCellsList(int rows, int columns) {
         int size = rows * columns;
@@ -39,24 +40,7 @@ public class Main extends Application {
         }
         return cells;
     }
-
-    private void showCells(StackPane root) {
-//        for (Cell cell : cells) {
-//            root.getChildren().add(cell);
-//        }
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 //        Button btn = new Button();
