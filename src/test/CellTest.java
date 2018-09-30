@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
 public class CellTest {
 
     private static final Cell[] CELLS_LIST = Main.createCellsList(3, 3);
-    private static final Cell[] SMALL_CELLS_LIST = Main.createCellsList(1, 2);
 
     @Test
     public void shouldHaveProperNeighborsAtUpperLeftCorner() {
@@ -16,7 +15,7 @@ public class CellTest {
 
         // then
         int[] expected = new int[]{1, 3, 4};
-        assertEquals(expected, neighbors);
+        assertArrayEquals(expected, neighbors);
     }
 
     @Test
@@ -26,7 +25,7 @@ public class CellTest {
 
         // then
         int[] expected = new int[]{0, 2, 3, 4, 5};
-        assertEquals(expected, neighbors);
+        assertArrayEquals(expected, neighbors);
     }
 
     @Test
@@ -36,7 +35,7 @@ public class CellTest {
 
         //then
         int[] expected = new int[]{1, 4, 5};
-        assertEquals(expected, neighbors);
+        assertArrayEquals(expected, neighbors);
     }
 
     @Test
@@ -46,7 +45,7 @@ public class CellTest {
 
         //then
         int[] expected = new int[]{0, 1, 4, 6, 7};
-        assertEquals(expected, neighbors);
+        assertArrayEquals(expected, neighbors);
     }
 
     @Test
@@ -56,7 +55,7 @@ public class CellTest {
 
         //then
         int[] expected = new int[]{0, 1, 2, 3, 5, 6, 7, 8};
-        assertEquals(expected, neighbors);
+        assertArrayEquals(expected, neighbors);
     }
 
     @Test
@@ -66,7 +65,7 @@ public class CellTest {
 
         //then
         int[] expected = new int[]{1, 2, 4, 7, 8};
-        assertEquals(expected, neighbors);
+        assertArrayEquals(expected, neighbors);
     }
 
     @Test
@@ -76,7 +75,7 @@ public class CellTest {
 
         //then
         int[] expected = new int[]{3, 4, 7};
-        assertEquals(expected, neighbors);
+        assertArrayEquals(expected, neighbors);
     }
 
     @Test
@@ -86,7 +85,7 @@ public class CellTest {
 
         //then
         int[] expected = new int[]{3, 4, 5, 6, 8};
-        assertEquals(expected, neighbors);
+        assertArrayEquals(expected, neighbors);
     }
 
     @Test
@@ -96,27 +95,7 @@ public class CellTest {
 
         //then
         int[] expected = new int[]{4, 5, 7};
-        assertEquals(expected, neighbors);
-    }
-
-    @Test
-    public void shouldHaveProperNeighborsInSmallArrayForLeftCell() {
-        // when
-        int[] neighbors = SMALL_CELLS_LIST[0].getNeighbors();
-
-        //then
-        int[] expected = new int[]{1};
-        assertEquals(expected, neighbors);
-    }
-
-    @Test
-    public void shouldHaveProperNeighborsInSmallArrayForRightCell() {
-        //when
-        int[] neighbors = SMALL_CELLS_LIST[1].getNeighbors();
-
-        // then
-        int[] expected = new int[]{0};
-        assertEquals(expected, neighbors);
+        assertArrayEquals(expected, neighbors);
     }
 
     @Test

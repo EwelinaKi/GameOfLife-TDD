@@ -1,4 +1,3 @@
-
 import main.java.gameOfLife.controller.Main;
 import main.java.gameOfLife.model.Cell;
 import org.junit.Test;

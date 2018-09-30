@@ -1,17 +1,19 @@
 package main.java.gameOfLife.controller;
 
-import javafx.application.Application;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import main.java.gameOfLife.model.Cell;
 import main.java.gameOfLife.view.GameScene;
 
+import javafx.application.Application;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
 public class Main extends Application {
 
+    public static Cell[] cells;
     //size of the game field
-    public static final int ROWS_Y = 100;
-    public static final int COLUMNS_X = 100;
-    public static Cell[] cells = createCellsList(ROWS_Y, COLUMNS_X);
+    private static final int ROWS_Y = 100;
+    private static final int COLUMNS_X = 100;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -22,15 +24,38 @@ public class Main extends Application {
         stage.setTitle("Game of life");
         StackPane root = new StackPane();
         GameScene scene = new GameScene(root, stage);
+
+        cells = createCellsList(ROWS_Y, COLUMNS_X);
+        showCells(root);
     }
 
+
     public static Cell[] createCellsList(int rows, int columns) {
-        Cell[] cells = new Cell[rows * columns];
-        //TODO metoda umieszczająca obiekty cells w tablicy
+        int size = rows * columns;
+        Cell[] cells = new Cell[size];
+        for (int index = 0; index < size; index++) {
+            cells[index] = new Cell(index, rows, columns);
+        }
         return cells;
     }
 
+    private void showCells(StackPane root) {
+//        for (Cell cell : cells) {
+//            root.getChildren().add(cell);
+//        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 //        Button btn = new Button();
@@ -42,6 +67,4 @@ public class Main extends Application {
 //                System.out.println("Hello World!");
 //            }
 //        });
-
-
 //        root.getChildren().add(btn);
