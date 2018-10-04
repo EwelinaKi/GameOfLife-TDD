@@ -4,26 +4,37 @@ import gameoflife.model.Cell;
 import gameoflife.view.DisplayCells;
 import gameoflife.view.GameScene;
 
+
 public class Cycle {
 
-    public static Long cycleCount = Long.valueOf(0);
+    private Long cycleCount = 0L;
+    private Cell[] cells;
+    private DisplayCells display;
+    private GameScene scene;
 
-    public static void run() {
-        calculateAllNewStatesForArray();
-        setAllNewStatesForCells();
-        DisplayCells.updateView();
-        cycleCount = cycleCount +1;
-        GameScene.cycleUpdate(cycleCount);
+    public Cycle(GameScene scene, Cell[] cells, DisplayCells display) {
+        this.cells = cells;
+        this.display = display;
+        this.scene = scene;
+
     }
 
-    private static void calculateAllNewStatesForArray() {
-        for (Cell cell : Main.CELLS){
-            cell.calculateNewState();
+    public void run() {
+        calculateAllNewStatesForArray();
+        setAllNewStatesForCells();
+        display.updateView();
+        cycleCount = cycleCount + 1;
+        scene.cycleUpdate(cycleCount);
+    }
+
+    private void calculateAllNewStatesForArray() {
+        for (Cell cell : this.cells) {
+            cell.calculateNewState(this.cells);
         }
     }
 
-    private static void setAllNewStatesForCells() {
-        for (Cell cell : Main.CELLS){
+    private void setAllNewStatesForCells() {
+        for (Cell cell : this.cells) {
             cell.updateState();
         }
     }

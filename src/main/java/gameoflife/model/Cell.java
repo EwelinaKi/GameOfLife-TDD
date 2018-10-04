@@ -1,7 +1,7 @@
 package gameoflife.model;
 
-import gameoflife.controller.Main;
 import java.util.stream.IntStream;
+
 
 public class Cell {
 
@@ -10,15 +10,16 @@ public class Cell {
     private boolean goingToLive;
 
     public Cell(int index, int size) {
+
         alive = false;
         goingToLive = false;
         neighbors = createNeighborsArray(index, size);
     }
 
-    public void calculateNewState() {
+    public void calculateNewState(Cell[] cells) {
         long livingNeighbors = IntStream
                 .of(neighbors)
-                .filter(neighbourIndex -> Main.CELLS[neighbourIndex].isAlive())
+                .filter(neighbourIndex -> cells[neighbourIndex].isAlive())
                 .count();
 
         if (livingNeighbors < 2 || livingNeighbors > 3) {
@@ -34,24 +35,24 @@ public class Cell {
         return alive;
     }
 
-    public boolean isGoingToLive() {
-        return goingToLive;
-    }
-
-    public int[] getNeighbors() {
-        return neighbors;
-    }
-
-    public void updateState() {
-        alive = goingToLive;
-    }
-
     public void kill() {
         alive = false;
     }
 
     public void revive() {
         alive = true;
+    }
+
+    public void updateState() {
+        alive = goingToLive;
+    }
+
+    boolean isGoingToLive() {
+        return goingToLive;
+    }
+
+    int[] getNeighbors() {
+        return neighbors;
     }
 
     private int[] createNeighborsArray(int index, int size) {
@@ -130,7 +131,7 @@ public class Cell {
     }
 
     private int[] calculateNeighborsForBottomEdge(int index, int size) {
-        return new int[] {
+        return new int[]{
                 index - size - 1,
                 index - size,
                 index - size + 1,
@@ -140,7 +141,7 @@ public class Cell {
     }
 
     private int[] calculateNeighborsForLeftEdge(int index, int size) {
-        return new int[] {
+        return new int[]{
                 index - size,
                 index - size + 1,
                 index + 1,
@@ -150,7 +151,7 @@ public class Cell {
     }
 
     private int[] calculateNeighborsForRightEdge(int index, int size) {
-        return new int[] {
+        return new int[]{
                 index - size - 1,
                 index - size,
                 index - 1,
@@ -160,7 +161,7 @@ public class Cell {
     }
 
     private int[] calculateNeighborsForMiddle(int index, int size) {
-        return new int[] {
+        return new int[]{
                 index - size - 1,
                 index - size,
                 index - size + 1,

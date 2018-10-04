@@ -11,10 +11,8 @@ import javafx.scene.layout.Pane;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Main extends Application {
 
-    // array of all CELLS in game
-    public static Cell[] CELLS;
+public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -22,14 +20,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+
+        // number of cells in row/column
         int size = 30;
+        // array of all CELLS in game
+        Cell[] cellsList = createCellsList(size);
 
         stage.setTitle("Game of life");
         Pane root = new Pane();
-        GameScene scene = new GameScene(root, stage);
-
-        CELLS = createCellsList(size);
-        DisplayCells.initializeView(root, size);
+        DisplayCells display = new DisplayCells(cellsList);
+        new GameScene(root, stage, cellsList, display);
+        display.initializeView(root, size);
     }
 
     public static Cell[] createCellsList(int size) {

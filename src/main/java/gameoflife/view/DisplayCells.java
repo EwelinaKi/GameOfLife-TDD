@@ -1,5 +1,6 @@
 package gameoflife.view;
 
+import gameoflife.model.Cell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -8,37 +9,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import static gameoflife.controller.Main.CELLS;
-
 public class DisplayCells {
 
-    private static Image WHITE_CELL = new Image("/white50.png");
-    private static Image BLACK_CELL = new Image("/black50.png");
-    private static List<ImageView> IMAGES_TO_DISPLAY = setImages();
-    private static int IMAGE_WIDTH = 25;
+    private final Image WHITE_CELL = new Image("/white50.png");
+    private final Image BLACK_CELL = new Image("/black50.png");
+    private final List<ImageView> imagesToDisplay;
+    private final int imageWidth = 25;
+    private final Cell[] cells;
 
+    public DisplayCells(Cell[] cells) {
+        this.cells = cells;
+        this.imagesToDisplay = setImages();
+    }
 
-    public static void initializeView(Pane root, int size) {
+    public void initializeView(Pane root, int size) {
         setCoordinates(size);
         addToPane(root);
     }
 
-    public static void updateView() {
+    public void updateView() {
         updateImages();
     }
 
-    private static List<ImageView> setImages() {
+    private List<ImageView> setImages() {
         List<ImageView> list = new ArrayList<>();
-        for (int i = 0; i < CELLS.length; i++) {
+        for (int i = 0; i < cells.length; i++) {
             ImageView cellImage = new ImageView();
             cellImage.setImage(BLACK_CELL);
             int finalI = i;
             cellImage.setOnMouseClicked(e -> {
-                if (CELLS[finalI].isAlive()) {
-                    CELLS[finalI].kill();
+                if (cells[finalI].isAlive()) {
+                    cells[finalI].kill();
                     cellImage.setImage(BLACK_CELL);
                 } else {
-                    CELLS[finalI].revive();
+                    cells[finalI].revive();
                     cellImage.setImage(WHITE_CELL);
                 }
             });
@@ -47,35 +51,35 @@ public class DisplayCells {
         return list;
     }
 
-    private static void setCoordinates(int size) {
-        ImageCoordinates coordinates = new ImageCoordinates();
+    private void setCoordinates(int size) {
+        ImageCoordinates coordinates = new ImageCoordinates(imageWidth);
 
-        IMAGES_TO_DISPLAY.forEach(image -> {
-            image.setX(coordinates.getX() + IMAGE_WIDTH);
+        imagesToDisplay.forEach(image -> {
+            image.setX(coordinates.getX() + imageWidth);
             image.setY(coordinates.getY());
 
             if (isEndOfColumn(size, coordinates.getColNumb())) {
-                coordinates.addNewRow(IMAGE_WIDTH);
+                coordinates.addNewRow();
             } else {
-                coordinates.addNewColumn(IMAGE_WIDTH);
+                coordinates.addNewColumn();
             }
         });
     }
 
-    private static boolean isEndOfColumn(int columns, int colNumb) {
+    private boolean isEndOfColumn(int columns, int colNumb) {
         return colNumb == columns;
     }
 
-    private static void addToPane(Pane root) {
-        IMAGES_TO_DISPLAY.forEach(image -> root.getChildren().add(image));
+    private void addToPane(Pane root) {
+        imagesToDisplay.forEach(image -> root.getChildren().add(image));
     }
 
-    private static void updateImages() {
-        for (int i = 0; i < CELLS.length; i++) {
-            if (CELLS[i].isAlive()) {
-                IMAGES_TO_DISPLAY.get(i).setImage(WHITE_CELL);
+    private void updateImages() {
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i].isAlive()) {
+                imagesToDisplay.get(i).setImage(WHITE_CELL);
             } else {
-                IMAGES_TO_DISPLAY.get(i).setImage(BLACK_CELL);
+                imagesToDisplay.get(i).setImage(BLACK_CELL);
             }
         }
     }
