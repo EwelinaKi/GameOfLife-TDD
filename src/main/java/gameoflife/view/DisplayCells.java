@@ -18,8 +18,8 @@ public class DisplayCells {
     private static int IMAGE_WIDTH = 25;
 
 
-    public static void initializeView(Pane root, int columns) {
-        setCoordinates(columns);
+    public static void initializeView(Pane root, int size) {
+        setCoordinates(size);
         addToPane(root);
     }
 
@@ -47,14 +47,14 @@ public class DisplayCells {
         return list;
     }
 
-    private static void setCoordinates(int columns) {
+    private static void setCoordinates(int size) {
         ImageCoordinates coordinates = new ImageCoordinates();
 
         IMAGES_TO_DISPLAY.forEach(image -> {
             image.setX(coordinates.getX() + IMAGE_WIDTH);
             image.setY(coordinates.getY());
 
-            if (isEndOfColumn(columns, coordinates.getColNumb())) {
+            if (isEndOfColumn(size, coordinates.getColNumb())) {
                 coordinates.addNewRow(IMAGE_WIDTH);
             } else {
                 coordinates.addNewColumn(IMAGE_WIDTH);

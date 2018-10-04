@@ -9,10 +9,10 @@ public class Cell {
     private boolean alive;
     private boolean goingToLive;
 
-    public Cell(int index, int rows, int columns) {
+    public Cell(int index, int size) {
         alive = false;
         goingToLive = false;
-        neighbors = createNeighborsArray(index, rows, columns);
+        neighbors = createNeighborsArray(index, size);
     }
 
     public void calculateNewState() {
@@ -54,121 +54,121 @@ public class Cell {
         alive = true;
     }
 
-    private int[] createNeighborsArray(int index, int rows, int columns) {
+    private int[] createNeighborsArray(int index, int size) {
 
-        if (isOnCorner(index, rows, columns)) {
-            return calculateNeighborsForCorner(index, rows, columns);
-        } else if (isOnUpperEdge(index, columns)) {
-            return calculateNeighborsForUpperEdge(index, columns);
-        } else if (isOnBottomEdge(index, rows, columns)) {
-            return calculateNeighborsForBottomEdge(index, columns);
-        } else if (isOnLeftEdge(index, rows)) {
-            return calculateNeighborsForLeftEdge(index, columns);
-        } else if (isOnRightEdge(index, columns)) {
-            return calculateNeighborsForRightEdge(index, columns);
+        if (isOnCorner(index, size)) {
+            return calculateNeighborsForCorner(index, size);
+        } else if (isOnUpperEdge(index, size)) {
+            return calculateNeighborsForUpperEdge(index, size);
+        } else if (isOnBottomEdge(index, size)) {
+            return calculateNeighborsForBottomEdge(index, size);
+        } else if (isOnLeftEdge(index, size)) {
+            return calculateNeighborsForLeftEdge(index, size);
+        } else if (isOnRightEdge(index, size)) {
+            return calculateNeighborsForRightEdge(index, size);
         } else {
-            return calculateNeighborsForMiddle(index, columns);
+            return calculateNeighborsForMiddle(index, size);
         }
     }
 
-    private boolean isOnUpperEdge(int index, int columns) {
-        return index <= columns - 1;
+    private boolean isOnUpperEdge(int index, int size) {
+        return index <= size - 1;
     }
 
-    private boolean isOnBottomEdge(int index, int rows, int columns) {
-        return index >= rows * columns - columns;
+    private boolean isOnBottomEdge(int index, int size) {
+        return index >= size * size - size;
     }
 
-    private boolean isOnLeftEdge(int index, int rows) {
-        return index % rows == 0;
+    private boolean isOnLeftEdge(int index, int size) {
+        return index % size == 0;
     }
 
-    private boolean isOnRightEdge(int index, int columns) {
-        return (index + 1) % columns == 0;
+    private boolean isOnRightEdge(int index, int size) {
+        return (index + 1) % size == 0;
     }
 
-    private boolean isOnCorner(int index, int rows, int columns) {
-        return index == 0 || index == (columns - 1) || index == columns * (rows - 1) || index == ((rows * columns) - 1);
+    private boolean isOnCorner(int index, int size) {
+        return index == 0 || index == (size - 1) || index == size * (size - 1) || index == ((size * size) - 1);
     }
 
-    private int[] calculateNeighborsForCorner(int index, int rows, int columns) {
+    private int[] calculateNeighborsForCorner(int index, int size) {
         if (index == 0) {
             // upper left
             return new int[]{
                     index + 1,
-                    index + columns,
-                    index + columns + 1};
-        } else if (index == columns - 1) {
+                    index + size,
+                    index + size + 1};
+        } else if (index == size - 1) {
             // upper right
             return new int[]{
                     index - 1,
-                    index + columns - 1,
-                    index + columns};
-        } else if (index == columns * (rows - 1)) {
+                    index + size - 1,
+                    index + size};
+        } else if (index == size * (size - 1)) {
             // bottom left
             return new int[]{
-                    index - columns,
-                    index - columns + 1,
+                    index - size,
+                    index - size + 1,
                     index + 1};
         } else {
             // bottom right
             return new int[]{
-                    index - columns - 1,
-                    index - columns,
+                    index - size - 1,
+                    index - size,
                     index - 1};
         }
     }
 
-    private int[] calculateNeighborsForUpperEdge(int index, int columns) {
+    private int[] calculateNeighborsForUpperEdge(int index, int size) {
         return new int[]{
                 index - 1,
                 index + 1,
-                index + columns - 1,
-                index + columns,
-                index + columns + 1
+                index + size - 1,
+                index + size,
+                index + size + 1
         };
     }
 
-    private int[] calculateNeighborsForBottomEdge(int index, int columns) {
+    private int[] calculateNeighborsForBottomEdge(int index, int size) {
         return new int[] {
-                index - columns - 1,
-                index - columns,
-                index - columns + 1,
+                index - size - 1,
+                index - size,
+                index - size + 1,
                 index - 1,
                 index + 1
         };
     }
 
-    private int[] calculateNeighborsForLeftEdge(int index, int columns) {
+    private int[] calculateNeighborsForLeftEdge(int index, int size) {
         return new int[] {
-                index - columns,
-                index - columns + 1,
+                index - size,
+                index - size + 1,
                 index + 1,
-                index + columns,
-                index + columns + 1
+                index + size,
+                index + size + 1
         };
     }
 
-    private int[] calculateNeighborsForRightEdge(int index, int columns) {
+    private int[] calculateNeighborsForRightEdge(int index, int size) {
         return new int[] {
-                index - columns - 1,
-                index - columns,
+                index - size - 1,
+                index - size,
                 index - 1,
-                index + columns - 1,
-                index + columns
+                index + size - 1,
+                index + size
         };
     }
 
-    private int[] calculateNeighborsForMiddle(int index, int columns) {
+    private int[] calculateNeighborsForMiddle(int index, int size) {
         return new int[] {
-                index - columns - 1,
-                index - columns,
-                index - columns + 1,
+                index - size - 1,
+                index - size,
+                index - size + 1,
                 index - 1,
                 index + 1,
-                index + columns - 1,
-                index + columns,
-                index + columns + 1
+                index + size - 1,
+                index + size,
+                index + size + 1
         };
     }
 

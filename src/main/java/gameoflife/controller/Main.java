@@ -15,9 +15,6 @@ public class Main extends Application {
 
     // array of all CELLS in game
     public static Cell[] CELLS;
-    private static final int ROWS_Y = 30;
-    private static final int COLUMNS_X = 30;
-
 
     public static void main(String[] args) {
         launch(args);
@@ -25,19 +22,21 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        int size = 30;
+
         stage.setTitle("Game of life");
         Pane root = new Pane();
         GameScene scene = new GameScene(root, stage);
 
-        CELLS = createCellsList(ROWS_Y, COLUMNS_X);
-        DisplayCells.initializeView(root, COLUMNS_X);
+        CELLS = createCellsList(size);
+        DisplayCells.initializeView(root, size);
     }
 
-    public static Cell[] createCellsList(int rows, int columns) {
+    public static Cell[] createCellsList(int size) {
         return IntStream
-                .range(0, rows * columns)
-                .mapToObj(index -> new Cell(index, rows, columns))
+                .range(0, size * size)
+                .mapToObj(index -> new Cell(index, size))
                 .collect(Collectors.toList())
-                .toArray(new Cell[rows * columns]);
+                .toArray(new Cell[size * size]);
     }
 }
