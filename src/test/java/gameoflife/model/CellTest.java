@@ -1,6 +1,6 @@
-import main.java.gameOfLife.controller.Main;
-import main.java.gameOfLife.model.Cell;
-import org.junit.Ignore;
+package gameoflife.model;
+
+import gameoflife.controller.Main;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -108,7 +108,7 @@ public class CellTest {
         // when
         cellsList[0].revive();
         controlCell.revive();
-        Main.cells = cellsList;
+        Main.CELLS = cellsList;
         controlCell.calculateNewState();
 
         // then underpopulation should kill this cell
@@ -125,21 +125,22 @@ public class CellTest {
 
         // when cell is living
         controlCell.revive();
-        Main.cells = cellsList;
-        boolean oldStateForLiving = controlCell.isAlive();
+        Main.CELLS = cellsList;
+//        boolean oldStateForLiving = controlCell.isAlive();
         controlCell.calculateNewState();
-        boolean newStateForLiving = controlCell.isGoingToLive();
+//        boolean newStateForLiving = controlCell.isGoingToLive();
+        boolean newStateForLiving = controlCell.isAlive();
 
         //when cell is dead
         controlCell.kill();
-        Main.cells = cellsList;
-        boolean oldStateForDead = controlCell.isAlive();
+        Main.CELLS = cellsList;
+//        boolean oldStateForDead = controlCell.isAlive();
         controlCell.calculateNewState();
-        boolean newStateForDead = controlCell.isGoingToLive();
+        boolean newStateForDead = controlCell.isAlive();
 
         // then should not change its state
-        assertEquals(newStateForLiving, oldStateForLiving);
-        assertEquals(newStateForDead, oldStateForDead);
+        assertEquals(newStateForLiving, true);
+        assertEquals(newStateForDead, false);
     }
 
     @Test
@@ -152,7 +153,7 @@ public class CellTest {
         cellsList[0].revive();
         cellsList[1].revive();
         cellsList[2].revive();
-        Main.cells = cellsList;
+        Main.CELLS = cellsList;
         controlCell.calculateNewState();
 
         // then should revive
@@ -171,7 +172,7 @@ public class CellTest {
         cellsList[2].revive();
         cellsList[3].revive();
         controlCell.revive();
-        Main.cells = cellsList;
+        Main.CELLS = cellsList;
         controlCell.calculateNewState();
         controlCell.updateState();
 

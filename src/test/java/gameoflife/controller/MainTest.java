@@ -1,5 +1,6 @@
-import main.java.gameOfLife.controller.Main;
-import main.java.gameOfLife.model.Cell;
+package gameoflife.controller;
+
+import gameoflife.model.Cell;
 import org.junit.Test;
 
 import java.util.Arrays;

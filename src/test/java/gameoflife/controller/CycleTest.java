@@ -1,47 +1,46 @@
-import main.java.gameOfLife.controller.GameLoop;
-import main.java.gameOfLife.controller.Main;
-import main.java.gameOfLife.model.Cell;
+package gameoflife.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertArrayEquals;
 
-public class GameLoopTest {
+public class CycleTest {
 
     @Test
     public void checkImmutablePatternBlock() {
         // given
-        Main.cells = Main.createCellsList(4, 4);
-        int[] blockIN = new int[]{5, 6, 9, 10};
+        Main.CELLS = Main.createCellsList(4, 4);
+        int[] blockIn = new int[]{5, 6, 9, 10};
+        setInitialPattern(blockIn);
 
         //when
-        setInitialPattern(blockIN);
-        int[] blockOUT = getPatternAfterGameLoop(1);
+        int[] blockOut = getPatternAfterGameLoop(1);
 
         // then
-        assertArrayEquals(blockIN, blockOUT);
+        assertArrayEquals(blockIn, blockOut);
     }
 
     @Test
     public void checkImmutablePatternLoaf() {
         // given
-        Main.cells= Main.createCellsList(4, 4);
-        int[] tubIN = new int[]{1, 2, 4, 7, 9, 11, 14};
+        Main.CELLS = Main.createCellsList(4, 4);
+        int[] tubIn = new int[]{1, 2, 4, 7, 9, 11, 14};
+        setInitialPattern(tubIn);
 
         //when
-        setInitialPattern(tubIN);
-        int[] tubOUT = getPatternAfterGameLoop(1);
+        int[] tubOut = getPatternAfterGameLoop(1);
 
         // then
-        assertArrayEquals(tubIN, tubOUT);
+        assertArrayEquals(tubIn, tubOut);
     }
 
     @Test
     public void checkOscillatorPatternBlinker() {
         // given
-        Main.cells = Main.createCellsList(3, 3);
+        Main.CELLS = Main.createCellsList(3, 3);
         int[] blinkerIN = new int[]{1, 4, 7};
 
         //when
@@ -55,7 +54,7 @@ public class GameLoopTest {
     @Test
     public void checkOscillatorPatternPulsar() {
         // given
-        Main.cells = Main.createCellsList(15, 15);
+        Main.CELLS = Main.createCellsList(15, 15);
         int[] pulsarIN = new int[]{18, 19, 20, 24, 25, 26, 46, 51, 53, 58, 61, 66, 68, 73, 76, 81, 83,
                 88, 93, 94, 95, 99, 100, 101, 123, 124, 125, 129, 130, 131, 136, 141, 143, 148, 151, 156,
                 158, 163, 166, 171, 173, 178, 198, 199, 200, 204, 205, 206};
@@ -68,11 +67,11 @@ public class GameLoopTest {
         assertArrayEquals(pulsarIN, pulsarOUT);
     }
 
-    private int[] checkSetPattern(Cell[] cells) {
+    private int[] checkSetPattern() {
         List<Integer> pattern = new ArrayList<>();
 
-        for (int i = 0; i < cells.length; i++) {
-            if (Main.cells[i].isAlive()) {
+        for (int i = 0; i < Main.CELLS.length; i++) {
+            if (Main.CELLS[i].isAlive()) {
                 pattern.add(i);
             }
         }
@@ -81,14 +80,14 @@ public class GameLoopTest {
 
     private void setInitialPattern(int[] block) {
         for (int index : block) {
-            Main.cells[index].revive();
+            Main.CELLS[index].revive();
         }
     }
 
     private int[] getPatternAfterGameLoop(int loops) {
         for (int i = 0; i < loops; i++) {
-            GameLoop.run();
+            Cycle.run();
         }
-        return checkSetPattern(Main.cells);
+        return checkSetPattern();
     }
 }

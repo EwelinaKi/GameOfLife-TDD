@@ -1,0 +1,34 @@
+@font-face {
+    font-family: Charmonman;
+    src: url('Charmonman-Bold.ttf');
+}
+
+.root {
+    -fx-background-image: url('/metal.jpg');
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-font-size: 20px;
+    -fx-fill: #818181;
+    -fx-font-family: "Charmonman";
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-effect: innershadow( three-pass-box , rgba(249, 49, 113, 0.89), 50, 0.0 , 0 , 2 );
+}
+
+#gameName {
+    -fx-font-family: "Charmonman";
+    -fx-font-size: 42px;
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+#text {
+    -fx-font-size: 20px;
+    -fx-font-family: "Charmonman";
+    -fx-font-weight: bold;
+}
+

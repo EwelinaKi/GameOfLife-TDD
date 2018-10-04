@@ -1,6 +1,7 @@
-package main.java.gameOfLife.model;
+package gameoflife.model;
 
-import main.java.gameOfLife.controller.Main;
+import gameoflife.controller.Main;
+import java.util.stream.IntStream;
 
 public class Cell {
 
@@ -15,11 +16,11 @@ public class Cell {
     }
 
     public void calculateNewState() {
-        int livingNeighbors = 0;
+        long livingNeighbors = IntStream
+                .of(neighbors)
+                .filter(neighbourIndex -> Main.CELLS[neighbourIndex].isAlive())
+                .count();
 
-        for (int i = 0; i < neighbors.length; i++) {
-            livingNeighbors = Main.cells[neighbors[i]].isAlive() ? livingNeighbors + 1 : livingNeighbors;
-        }
         if (livingNeighbors < 2 || livingNeighbors > 3) {
             goingToLive = false;
         } else if (livingNeighbors == 3) {
@@ -70,6 +71,26 @@ public class Cell {
         }
     }
 
+    private boolean isOnUpperEdge(int index, int columns) {
+        return index <= columns - 1;
+    }
+
+    private boolean isOnBottomEdge(int index, int rows, int columns) {
+        return index >= rows * columns - columns;
+    }
+
+    private boolean isOnLeftEdge(int index, int rows) {
+        return index % rows == 0;
+    }
+
+    private boolean isOnRightEdge(int index, int columns) {
+        return (index + 1) % columns == 0;
+    }
+
+    private boolean isOnCorner(int index, int rows, int columns) {
+        return index == 0 || index == (columns - 1) || index == columns * (rows - 1) || index == ((rows * columns) - 1);
+    }
+
     private int[] calculateNeighborsForCorner(int index, int rows, int columns) {
         if (index == 0) {
             // upper left
@@ -104,38 +125,42 @@ public class Cell {
                 index + 1,
                 index + columns - 1,
                 index + columns,
-                index + columns + 1};
+                index + columns + 1
+        };
     }
 
     private int[] calculateNeighborsForBottomEdge(int index, int columns) {
-        return new int[]{
+        return new int[] {
                 index - columns - 1,
                 index - columns,
                 index - columns + 1,
                 index - 1,
-                index + 1};
+                index + 1
+        };
     }
 
     private int[] calculateNeighborsForLeftEdge(int index, int columns) {
-        return new int[]{
+        return new int[] {
                 index - columns,
                 index - columns + 1,
                 index + 1,
                 index + columns,
-                index + columns + 1};
+                index + columns + 1
+        };
     }
 
     private int[] calculateNeighborsForRightEdge(int index, int columns) {
-        return new int[]{
+        return new int[] {
                 index - columns - 1,
                 index - columns,
                 index - 1,
                 index + columns - 1,
-                index + columns};
+                index + columns
+        };
     }
 
     private int[] calculateNeighborsForMiddle(int index, int columns) {
-        return new int[]{
+        return new int[] {
                 index - columns - 1,
                 index - columns,
                 index - columns + 1,
@@ -143,26 +168,8 @@ public class Cell {
                 index + 1,
                 index + columns - 1,
                 index + columns,
-                index + columns + 1};
+                index + columns + 1
+        };
     }
 
-    private boolean isOnUpperEdge(int index, int columns) {
-        return index <= columns - 1;
-    }
-
-    private boolean isOnBottomEdge(int index, int rows, int columns) {
-        return index >= rows * columns - columns;
-    }
-
-    private boolean isOnLeftEdge(int index, int rows) {
-        return index % rows == 0;
-    }
-
-    private boolean isOnRightEdge(int index, int columns) {
-        return (index + 1) % columns == 0;
-    }
-
-    private boolean isOnCorner(int index, int rows, int columns) {
-        return index == 0 || index == (columns - 1) || index == columns * (rows - 1) || index == ((rows * columns) - 1);
-    }
 }
